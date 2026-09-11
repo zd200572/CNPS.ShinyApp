@@ -65,19 +65,14 @@ Windows 下也可以双击 **`launch_app.bat`**（自动探测 R 安装位置，
    倍数变化、循环通路图、宿主菌群、Beta 多样性。
 4. **结果导出** 页：一键打包全部结果（zip），目录结构与官方脚本一致。
 
-## 正确性验证
+## 结果验证
 
-仓库自带 `smoke_test.R`：完整跑一遍四循环，并在官方基准输出可用时**逐值对拍**
-（丰度表、差异检验 p 值、fold change、Bray-Curtis 距离、PCoA 坐标、宿主菌群各级表，
-容差 1e-6；各循环宿主分析过程数 C 4 / N 12 / P 2 / S 11 与基准一致）。
-没有基准数据时自动降级为结构校验，可在任何环境运行：
+应用的核心输出已与 [CNPS.cycle 官方自动化脚本](https://github.com/yuezhengfu/CNPS.cycle)
+的基准结果**逐值对拍验证**（过程级/KO 级丰度表、差异检验 p 值、fold change、
+Bray-Curtis 距离、PCoA 坐标、宿主菌群各级表，容差 1e-6；各循环宿主分析过程数
+C 4 / N 12 / P 2 / S 11 与官方基准一致），确保封装没有改变任何分析行为。
 
-```r
-set LC_CTYPE=.UTF-8 & Rscript smoke_test.R
-```
-
-NMDS 采用随机起点的迭代算法，管道内已固定种子（`set.seed(123)`）保证可复现；
-其坐标不参与对拍（基准运行的随机态不可复现），只验证有限性与 stress。
+NMDS 采用随机起点的迭代算法，管道内已固定随机种子（`set.seed(123)`）保证结果可复现。
 
 ## 实现要点
 
@@ -95,7 +90,6 @@ CNPS.cycle 包的取数机制比较特殊（已通过源码审查 + 运行实验
 ```
 ├── app.R              入口（UI + server）
 ├── launch_app.bat     Windows 双击启动器
-├── smoke_test.R       冒烟测试（含与官方基准的对拍）
 ├── www/styles.css     主题样式
 ├── docs/              截图
 └── R/
