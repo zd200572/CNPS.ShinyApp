@@ -1,0 +1,12 @@
+# logs & temp
+*.log
+app_log.txt
+smoke_log.txt
+Rplots.pdf
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS
+Thumbs.db
+.DS_Store
